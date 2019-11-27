@@ -53,6 +53,7 @@ def loop_find(query, timeout=ST.FIND_TIMEOUT, threshold=None, interval=0.5, inte
         been found in screenshot
 
     """
+    # smartauto
     G.LOGGING.info("Try finding:\n%s", query)
     start_time = time.time()
     while True:
@@ -134,6 +135,15 @@ class Template(object):
     def __repr__(self):
         filepath = self.filepath if PY3 else self.filepath.encode(sys.getfilesystemencoding())
         return "Template(%s)" % filepath
+    # smartauto match
+    def match_in_smartauto(self, screen):
+        match_result = self._cv_match(screen)
+        G.LOGGING.debug("match result: %s", match_result)
+        if not match_result:
+            return None
+        # focus_pos = TargetPos().getXY(match_result, self.target_pos)
+        # return focus_pos
+        return match_result
 
     def match_in(self, screen):
         match_result = self._cv_match(screen)
